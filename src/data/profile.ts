@@ -1,19 +1,19 @@
 export const profile = {
-  name: "Farid",
-  role: "Full Stack Developer",
-  location: "Indonesia",
-  email: "ridzdevelop@gmail.com",
-  whatsapp: "6289604189851",
-  github: "https://github.com/ridzgabut-source?tab=repositories",
-  siteUrl: "ridzweb.online",
+  name: 'Farid',
+  role: 'Full Stack Developer',
+  location: 'Indonesia',
+  email: 'ridzdevelop@gmail.com',
+  whatsapp: '6289604189851',
+  github: 'https://github.com/ridzgabut-source?tab=repositories',
+  siteUrl: 'ridzweb.online',
 };
 export const sections = [
-  "Home",
-  "About",
-  "Skills",
-  "Experience",
-  "Projects",
-  "Contact",
+  'Home',
+  'About',
+  'Skills',
+  'Experience',
+  'Projects',
+  'Contact',
 ];
 
 // Edit the opening messages for each WhatsApp call to action here.
