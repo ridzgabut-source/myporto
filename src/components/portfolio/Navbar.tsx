@@ -137,7 +137,7 @@ export function Navbar({
         type="button"
         className={`mobile-nav-scrim ${open && mobile ? 'open' : ''}`}
         tabIndex={-1}
-        aria-label="Close navigation"
+        aria-label="Dismiss navigation overlay"
         aria-hidden={!open || !mobile}
         inert={!open || !mobile}
         onClick={() => close(true)}
@@ -169,7 +169,7 @@ export function Navbar({
           }}
           aria-expanded={open && mobile}
           aria-controls="portfolio-navigation"
-          aria-label="Toggle navigation"
+          aria-label={open ? 'Close navigation' : 'Menu navigation'}
         >
           <span className="menu-label">{open ? 'Close' : 'Menu'}</span>
           <span className="hamburger-icon" aria-hidden="true">

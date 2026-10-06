@@ -1,10 +1,10 @@
 # Farid / Interactive Developer Portfolio
 
-Off-white editorial theme with serif typography, bento content, floating cards, a procedural chrome Three.js sculpture, and a bold contact CTA. React + TypeScript + Vite, Three.js, Framer Motion. Run `npm install`, `npm run dev`; production: `npm run build`.
+Off-white editorial theme with serif typography, bento content, floating cards, a procedural chrome Three.js sculpture, and a bold contact CTA. React + TypeScript + Vite and lazy Three.js; native CSS handles interface motion. Run `npm install`, `npm run dev`; production: `npm run build`.
 
 ## Content
 - `src/data/profile.ts`: identity, email, WhatsApp, GitHub, production URL. Empty contact URLs are hidden.
-- `src/data/projects.ts`: four original demo URLs, case studies, categories, optional repositories. Preview artwork is an interface illustration, not a screenshot. Replace with verified screenshots when available. Backend implementation and architecture are not asserted.
+- `src/data/projects.ts`: five live demo URLs, case studies, categories, optional repositories. CleanCraft Laundry uses a real website screenshot; the other project previews are interface illustrations. Backend implementation and architecture are not asserted.
 - `src/data/skills.ts`: provisional proficiency levels; review before publishing.
 - `src/data/experience.ts`: project milestones rather than employment history.
 - `src/three/Scene.tsx`: lazy Three.js, adaptive DPR/particles, offscreen pause, cleanup, static fallback, reduced motion.
@@ -16,7 +16,7 @@ Analytics emits `portfolio:analytics` CustomEvents and pushes to an existing `wi
 
 The production build prerenders all content to HTML and hydrates React; content remains available without JavaScript, independently of 3D. Vite retained because Next.js was recommended rather than mandatory. Measure LCP/CLS/INP after deployment; build checks do not guarantee PRD performance targets.
 
-Unused sketchbook reference code/assets, download helpers, and the original prompt are kept locally and excluded from the repository. Generated build files, dependencies, screenshots, performance reports, and private environment files are also ignored. The GitHub repository contains the active website source, configuration, dependency lockfile, and reusable checks.
+Unused sketchbook reference code/assets, download helpers, and the original prompt have been deleted from the workspace. Generated build files, dependencies, screenshots, performance reports, and private environment files are also ignored. The GitHub repository contains the active website source, configuration, dependency lockfile, and reusable checks.
 
 ## Paper interactions
 Hold the right mouse button over non-interactive page content to reveal a 1.75x magnifier. Release to close; Shift + right-click and right-clicks on links/controls retain their native menus. The bottom-left button toggles the lens for mouse/keyboard use; arrows move it and Escape closes it. The visual clone is inert, hides duplicate IDs, and uses the static sculpture fallback in place of the WebGL canvas. Lens closes on blur, pointer cancellation, mobile resize, or opening a dialog.
@@ -29,7 +29,7 @@ Mobile retains no magnifier. A compositor transform/opacity menu animates open a
 Mobile feedback uses one reusable ink ring via compositor animation, only on short taps (swipes and pointer cancellation suppress it). Section headings, bento tiles, and new filtered cards reveal once via IntersectionObserver; markup remains visible without JS. Reduced motion disables ripple/reveals/menu transitions, and no additional canvas or rendering dependency is added.
 
 ## Small-screen performance
-Phones retain the animated Three.js sculpture at DPR 1, with fewer geometry segments and a standard chrome material. Scene rendering stops outside the viewport, while a menu is open, or when the tab is hidden. Animation time pauses with it, so resuming never skips the sculpture ahead. Reduced motion and unavailable WebGL use the static fallback.
+Phones retain the animated Three.js sculpture at DPR 1, with fewer geometry segments and a pre-rendered chrome matcap texture. Preparing the full environment lighting remains exclusive to desktop; `npm run assets:matcap` regenerates the mobile texture. The renderer loads when the scene is visible and after critical fonts paint. Scene rendering stops outside the viewport, while a menu is open, or when the tab is hidden. Animation time pauses with it, so resuming never skips the sculpture ahead. Reduced motion and unavailable WebGL use the static fallback.
 
 `PaperFlight` and `usePaperFlight` handle airplane motion separately from the desktop lens. Section geometry is cached on layout changes, scroll updates are batched, and interpolation uses elapsed time. Smooth route transitions and a stable mobile flight viewport avoid jumps when browser toolbars resize. The mobile dashed tail travels with the plane in one layer; desktop retains its longer path. Navbar progress caches document height, and section navigation waits for the panel to close before scrolling. Mobile blur filters are removed; at <=480px, grain is disabled and scroll reveals only affect headings.
 
@@ -38,3 +38,15 @@ Secondary text shares a darker token, and small labels/body copy have larger res
 ## Verification
 
 Run `npm run lint`, `npm run build`, `npm run test:smoke`, and `npm run test:mobile`. Browser checks use an installed Google Chrome. Screenshots and performance reports are written to the ignored `artifacts/` folder.
+
+## Mobile redesign and SEO
+
+Phones use a left-aligned hero, a bounded 3D scene, two stable navigation cards, readable body text, horizontally scrollable filters, larger tap targets, and a simplified skills/timeline layout. The desktop editorial direction remains. Project counts are derived from the data; CleanCraft Laundry uses a real demo screenshot. UI illustrations remain for the other projects.
+
+All five project case studies are prerendered to `/projects/<slug>/index.html`, with real internal links and content that remains readable without JavaScript. Homepage and case-study pages have unique titles/descriptions, canonical URLs, Open Graph/Twitter cards, and matching JSON-LD. The sitemap lists only real indexable pages; `404.html` uses noindex and Netlify serves missing paths with status 404 via `_redirects`. No blanket SPA rewrite should override these static pages.
+
+WOFF2 fonts are served locally with swap and selected preloads. The initial client bundle no longer includes Framer Motion. `_headers` configures cache rules on Netlify; configure equivalent rules in other hosts. `npm run assets:social` regenerates the 1200 x 630 social preview using local Chrome. `npm run test:seo` verifies generated HTML, sitemap, schemas, image/font references and case-study hydration.
+
+After deploying the built `dist/` folder, submit `https://ridzweb.online/sitemap.xml` to Google Search Console and verify indexing of the homepage and case-study URLs. Search Console ownership verification and indexing are account actions, not performed by the build. Technical SEO and local audits cannot guarantee search rankings. References: [Google developer SEO guide](https://developers.google.com/search/docs/fundamentals/get-started-developers), [ProfilePage documentation](https://developers.google.com/search/docs/appearance/structured-data/profile-page).
+
+A local Lighthouse mobile audit after the 3D optimization scored Performance 96-97, Accessibility 100, SEO 100 across the optimized and final runs, with LCP 2.3s, TBT 100-150ms and CLS 0.001. These are simulated local measurements; hosting latency, real device hardware and search indexing require checks after deployment. The mobile scene remains animated and uses the generated matcap texture; desktop keeps full environment lighting.

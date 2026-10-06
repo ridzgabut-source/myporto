@@ -1,4 +1,5 @@
 ﻿import { Heading, Arrow } from './ui';
+import { projects } from '../../data/projects';
 export function About() {
   return (
     <section id="about" className="section">
@@ -84,7 +85,7 @@ export function About() {
           </div>
         </div>
         <div className="about-stat">
-          <b>04</b>
+          <b>{String(projects.length).padStart(2, '0')}</b>
           <div>
             <span className="mono">PROJECTS, OUT IN THE WORLD.</span>
             <p>
@@ -93,7 +94,10 @@ export function About() {
               More ideas on the way.
             </p>
           </div>
-          <a href="#projects" aria-label="Explore four live projects">
+          <a
+            href="#projects"
+            aria-label={`Explore ${projects.length} live projects`}
+          >
             <Arrow />
           </a>
         </div>

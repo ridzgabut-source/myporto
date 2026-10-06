@@ -1,11 +1,13 @@
 import { chromium } from 'playwright';
 import { preview } from 'vite';
 import assert from 'node:assert/strict';
+import { mkdir } from 'node:fs/promises';
 const server = await preview({
   preview: { host: '127.0.0.1', port: 4175, strictPort: true },
 });
 let browser;
 try {
+  await mkdir('artifacts', { recursive: true });
   browser = await chromium.launch({ channel: 'chrome', headless: true });
   const page = await browser.newPage({
     viewport: { width: 320, height: 568 },
@@ -39,7 +41,9 @@ try {
     await page.locator('.scene-canvas').evaluate((host) => host.clientWidth),
   );
   assert.ok(await page.locator('.mobile-flight-tail').isVisible());
-  const menu = page.getByRole('button', { name: 'Toggle navigation' });
+  const menu = page.getByRole('button', {
+    name: /Menu navigation|Close navigation/,
+  });
   await menu.tap();
   await page.waitForTimeout(300);
   const menuDraws = await page.evaluate(() => window.__drawCalls);
@@ -230,6 +234,7 @@ try {
     [],
     `Low contrast secondary text: ${JSON.stringify(failures)}`,
   );
+  await page.screenshot({ path: 'artifacts/mobile-redesign-hero.png' });
   await page.screenshot({
     path: 'artifacts/mobile-restored.png',
     fullPage: true,

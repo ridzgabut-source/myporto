@@ -6,13 +6,17 @@ import { Arrow, Heading } from './components/portfolio/ui';
 import { Projects } from './components/portfolio/Projects';
 import { Skills } from './components/portfolio/Skills';
 import './styles/global.css';
+import './styles/mobile.css';
+import { projects } from './data/projects';
+import { normalizePath } from './lib/seo';
+import { ProjectPage, NotFound } from './components/portfolio/ProjectPage';
 import { Hero } from './components/portfolio/Hero';
 import { Navbar } from './components/portfolio/Navbar';
 import { MobileEffects } from './components/interactions/MobileEffects';
 import { About } from './components/portfolio/About';
 import { Contact } from './components/portfolio/Contact';
 import { InteractiveAtmosphere } from './components/interactions/InteractiveAtmosphere';
-export default function App() {
+function Portfolio() {
   const [active, setActive] = useState('home');
   const [palette, setPalette] = useState(false);
   const [query, setQuery] = useState('');
@@ -160,4 +164,12 @@ export default function App() {
       <MobileEffects />
     </>
   );
+}
+
+export default function App({ path = '/' }: { path?: string }) {
+  if (normalizePath(path) === '/') return <Portfolio />;
+  const project = projects.find(
+    (project) => normalizePath(path) === `/projects/${project.slug}`,
+  );
+  return project ? <ProjectPage project={project} /> : <NotFound />;
 }

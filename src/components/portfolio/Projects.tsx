@@ -1,16 +1,15 @@
 import { useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { projects } from '../../data/projects';
 import type { Project } from '../../data/projects';
 import { Heading, Arrow, External } from './ui';
 import { Preview } from './ProjectPreview';
 import { ProjectDetail } from './ProjectDetail';
-import { useDevicePerformance } from '../../hooks/useDevicePerformance';
+import { projectPath } from '../../lib/seo';
+import { track } from '../../lib/analytics';
+const trackProject = (slug: string) => track('project_view', { project: slug });
 export function Projects() {
   const [filter, setFilter] = useState('All');
   const [selected, setSelected] = useState<Project | null>(null);
-  const reduced = useReducedMotion();
-  const quality = useDevicePerformance();
   const categories = [
     'All',
     'Full Stack',
@@ -39,64 +38,67 @@ export function Projects() {
             onClick={() => setFilter(c)}
           >
             {c}
-            {c === 'All' && <span>04</span>}
+            {c === 'All' && (
+              <span>{String(projects.length).padStart(2, '0')}</span>
+            )}
           </button>
         ))}
       </div>
       <div className="project-grid">
-        <AnimatePresence mode="popLayout">
-          {filtered.map((p, i) => (
-            <motion.article
-              layout={!reduced && quality === 'high'}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: reduced ? 0 : 0.22 }}
-              key={p.slug}
-              className="project-card"
-              onPointerMove={(e) => {
-                if (e.pointerType !== 'mouse' || reduced) return;
-                const r = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty(
-                  '--tilt',
-                  `${((e.clientX - r.left - r.width / 2) / r.width) * 3}deg`,
-                );
-              }}
-              onPointerLeave={(e) =>
-                e.currentTarget.style.setProperty('--tilt', '0deg')
-              }
-            >
+        {filtered.map((p, i) => (
+          <article
+            key={p.slug}
+            className="project-card"
+            onPointerMove={(e) => {
+              if (
+                e.pointerType !== 'mouse' ||
+                matchMedia('(prefers-reduced-motion: reduce)').matches ||
+                innerWidth < 768
+              )
+                return;
+              const r = e.currentTarget.getBoundingClientRect();
+              e.currentTarget.style.setProperty(
+                '--tilt',
+                `${((e.clientX - r.left - r.width / 2) / r.width) * 3}deg`,
+              );
+            }}
+            onPointerLeave={(e) =>
+              e.currentTarget.style.setProperty('--tilt', '0deg')
+            }
+          >
+            <div className="preview-button">
+              <Preview project={p} />
+            </div>
+            <div className="project-meta">
+              <span>
+                0{i + 1} / {p.category.toUpperCase()}
+              </span>
+              <span>{p.year}</span>
+            </div>
+            <h3>{p.title}</h3>
+            <p>{p.description}</p>
+            <div className="tags">
+              {p.technologies.map((t) => (
+                <span key={t}>{t}</span>
+              ))}
+            </div>
+            <div className="project-actions">
+              <External href={p.demo} event="project_demo_click">
+                Live demo
+              </External>
+              <a href={projectPath(p)} onClick={() => trackProject(p.slug)}>
+                Case study <Arrow />
+              </a>
               <button
-                className="preview-button"
+                type="button"
+                aria-label={`Quick view ${p.title}`}
                 onClick={() => setSelected(p)}
-                aria-label={`Buka case study ${p.title}`}
               >
-                <Preview project={p} />
+                Quick view <Arrow />
               </button>
-              <div className="project-meta">
-                <span>
-                  0{i + 1} / {p.category.toUpperCase()}
-                </span>
-                <span>{p.year}</span>
-              </div>
-              <h3>{p.title}</h3>
-              <p>{p.description}</p>
-              <div className="tags">
-                {p.technologies.map((t) => (
-                  <span key={t}>{t}</span>
-                ))}
-              </div>
-              <div className="project-actions">
-                <External href={p.demo} event="project_demo_click">
-                  Live demo
-                </External>
-                <button onClick={() => setSelected(p)}>
-                  Case study <Arrow />
-                </button>
-              </div>
-            </motion.article>
-          ))}
-        </AnimatePresence>
+            </div>
+          </article>
+        ))}
       </div>
       {!filtered.length && (
         <div className="empty-state" role="status">

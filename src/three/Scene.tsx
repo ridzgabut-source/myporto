@@ -10,23 +10,42 @@ export default function Scene() {
     const controller = new AbortController();
     const element = host.current;
     let dispose = () => {};
-    import('./createScene')
-      .then(async ({ createScene }) => {
+    let idle = 0,
+      timer = 0;
+    const load = () => {
+      import('./createScene')
+        .then(async ({ createScene }) => {
+          if (controller.signal.aborted) return;
+          const cleanup = await createScene(
+            element,
+            quality,
+            controller.signal,
+            setReady,
+          );
+          if (controller.signal.aborted) cleanup();
+          else dispose = cleanup;
+        })
+        .catch(() => {
+          if (!controller.signal.aborted) setReady(false);
+        });
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      // Let the critical text and local fonts paint before preparing WebGL.
+      document.fonts.ready.then(() => {
         if (controller.signal.aborted) return;
-        const cleanup = await createScene(
-          element,
-          quality,
-          controller.signal,
-          setReady,
-        );
-        if (controller.signal.aborted) cleanup();
-        else dispose = cleanup;
-      })
-      .catch(() => {
-        if (!controller.signal.aborted) setReady(false);
+        if (typeof window.requestIdleCallback === 'function')
+          idle = window.requestIdleCallback(load, { timeout: 1200 });
+        else timer = window.setTimeout(load, 120);
       });
+    });
+    observer.observe(element);
     return () => {
       controller.abort();
+      observer.disconnect();
+      if (idle) window.cancelIdleCallback(idle);
+      clearTimeout(timer);
       dispose();
       setReady(false);
     };

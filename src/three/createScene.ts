@@ -11,6 +11,16 @@ export async function createScene(
   onReady: (ready: boolean) => void,
 ) {
   const high = quality === 'high';
+  const matcap = high
+    ? undefined
+    : await new T.TextureLoader()
+        .loadAsync('/textures/chrome-matcap.png')
+        .catch(() => undefined);
+  if (matcap) matcap.colorSpace = T.SRGBColorSpace;
+  if (signal.aborted) {
+    matcap?.dispose();
+    return () => {};
+  }
   let renderer: T.WebGLRenderer;
   try {
     renderer = new T.WebGLRenderer({
@@ -19,6 +29,7 @@ export async function createScene(
       powerPreference: 'low-power',
     });
   } catch {
+    matcap?.dispose();
     return () => {};
   }
   renderer.setPixelRatio(Math.min(devicePixelRatio, high ? 1.75 : 1));
@@ -38,26 +49,30 @@ export async function createScene(
           clearcoat: 1,
           clearcoatRoughness: 0.15,
         })
-      : new T.MeshStandardMaterial({
-          color: 0xcacac4,
-          metalness: 1,
-          roughness: 0.24,
-        }),
+      : matcap
+        ? new T.MeshMatcapMaterial({ color: 0xffffff, matcap })
+        : new T.MeshStandardMaterial({
+            color: 0xcacac4,
+            metalness: 1,
+            roughness: 0.24,
+          }),
   );
   group.add(core);
-  const generator = new T.PMREMGenerator(renderer);
-  const room = new RoomEnvironment();
   let environment: T.WebGLRenderTarget | undefined;
-  try {
-    environment = generator.fromScene(room, 0.04);
-    scene.environment = Array.isArray(environment.texture)
-      ? environment.texture[0]
-      : environment.texture;
-  } catch {
-    /* The lights still show the sculpture without an environment map. */
-  } finally {
-    room.dispose();
-    generator.dispose();
+  if (high) {
+    const generator = new T.PMREMGenerator(renderer);
+    const room = new RoomEnvironment();
+    try {
+      environment = generator.fromScene(room, 0.04);
+      scene.environment = Array.isArray(environment.texture)
+        ? environment.texture[0]
+        : environment.texture;
+    } catch {
+      /* Direct lights remain available. */
+    } finally {
+      room.dispose();
+      generator.dispose();
+    }
   }
   for (let index = 0; index < 2; index++) {
     const ring = new T.Mesh(
@@ -230,6 +245,7 @@ export async function createScene(
     });
     geometries.forEach((geometry) => geometry.dispose());
     materials.forEach((material) => material.dispose());
+    matcap?.dispose();
     environment?.dispose();
     renderer.dispose();
     renderer.domElement.remove();

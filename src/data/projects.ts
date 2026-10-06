@@ -13,8 +13,34 @@
   challenge: string;
   color: string;
   kind: string;
+  cover?: string;
 }
 export const projects: Project[] = [
+  {
+    slug: 'cleancraft-laundry',
+    title: 'CleanCraft Laundry',
+    category: 'Frontend',
+    year: '2026',
+    description:
+      'Mockup website laundry dengan pilihan layanan, jadwal pickup, dan pelacakan cucian dalam satu pengalaman yang jelas.',
+    demo: 'https://laundrymockup.netlify.app/',
+    technologies: ['Responsive UI', 'Booking flow', 'Order tracking'],
+    features: [
+      'Katalog layanan dan harga',
+      'Alur penjadwalan pickup',
+      'Halaman pelacakan cucian',
+      'Antarmuka portal admin',
+    ],
+    problem:
+      'Pelanggan membutuhkan cara yang mudah untuk memilih perawatan pakaian dan mengetahui langkah berikutnya tanpa percakapan yang berulang.',
+    solution:
+      'Antarmuka CleanCraft menghubungkan informasi layanan, booking pickup, dan pelacakan pesanan melalui navigasi yang konsisten.',
+    challenge:
+      'Menyusun harga, durasi layanan, dan proses pickup agar mudah dipahami di layar kecil, sambil menjaga karakter visual editorial.',
+    color: '#d5dfc1',
+    kind: 'laundry',
+    cover: '/projects/laundry.jpg',
+  },
   {
     slug: 'catalog',
     title: 'Contoh Catalog',

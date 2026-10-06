@@ -3,6 +3,7 @@ import type { Project } from '../../data/projects';
 import { track } from '../../lib/analytics';
 import { External } from './ui';
 import { Preview } from './ProjectPreview';
+import { projectPath } from '../../lib/seo';
 export function ProjectDetail({
   project,
   onClose,
@@ -73,8 +74,8 @@ export function ProjectDetail({
               ))}
             </div>
             <p className="fine-print">
-              Scope berdasarkan konten portofolio lama. Detail backend dan
-              repository belum tersedia.
+              Scope menampilkan antarmuka dan alur yang didokumentasikan dalam
+              portofolio.
             </p>
             <h3>Technical challenge</h3>
             <p>{project.challenge}</p>
@@ -98,6 +99,7 @@ export function ProjectDetail({
             {project.kind === 'agency' ? 'Contact' : 'Booking / Contact'}
           </span>
         </div>
+        <a href={projectPath(project)}>Baca halaman case study lengkap</a>
         <External href={project.demo} event="project_demo_click">
           Explore live demo
         </External>

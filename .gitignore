@@ -30,27 +30,3 @@ dist-ssr
 .env
 .env.*
 !.env.example
-
-# Unused reference implementation retained only in the local workspace
-/public/landing-pages/
-/src/shaders/
-/download_assets.py
-/download_source.py
-/prompt.md
-/src/components/AboutSection.tsx
-/src/components/BookingEstimatorSection.tsx
-/src/components/ContactSection.tsx
-/src/components/Footer.tsx
-/src/components/HeroSection.tsx
-/src/components/Navbar.tsx
-/src/components/PageContents.tsx
-/src/components/PortfolioSection.tsx
-/src/components/ProcessSketchbookSection.tsx
-/src/components/ServicesSection.tsx
-/src/components/Sketchbook.tsx
-/src/components/SketchbookDecorations.tsx
-/src/components/SketchbookSection.tsx
-/src/components/utils.tsx
-/src/data/content.ts
-/src/data/processPlates.ts
-/src/dummy.ts

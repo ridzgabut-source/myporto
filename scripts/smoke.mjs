@@ -27,6 +27,7 @@ try {
     /LIVE RENDER/,
   );
   const demos = [
+    'https://laundrymockup.netlify.app/',
     'https://contohcatalog.netlify.app/',
     'https://creativeagen.netlify.app/',
     'https://barbershop-xi-eight.vercel.app/',
@@ -189,7 +190,7 @@ try {
     .last()
     .click();
   await page.waitForTimeout(400);
-  assert.equal(await page.locator('.project-card').count(), 2);
+  assert.equal(await page.locator('.project-card').count(), 3);
   await page
     .getByRole('button', { name: 'Backend', exact: true })
     .last()
@@ -199,15 +200,18 @@ try {
   assert.ok(await page.getByRole('status').isVisible());
   await page.getByRole('button', { name: 'Lihat semua project' }).click();
   await page.waitForTimeout(400);
-  assert.equal(await page.locator('.project-card').count(), 4);
+  assert.equal(await page.locator('.project-card').count(), 5);
   await page
-    .getByRole('button', { name: 'Case study', exact: false })
+    .getByRole('button', {
+      name: 'Quick view CleanCraft Laundry',
+      exact: true,
+    })
     .first()
     .click();
   assert.ok(await page.locator('.case-dialog').isVisible());
   assert.equal(
     await page.locator('.case-dialog h2').textContent(),
-    'Contoh Catalog',
+    'CleanCraft Laundry',
   );
   await page.keyboard.press('Escape');
   assert.ok(!(await page.locator('.case-dialog').count()));
@@ -240,7 +244,9 @@ try {
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   );
-  await mobile.getByRole('button', { name: 'Toggle navigation' }).click();
+  await mobile
+    .getByRole('button', { name: /Menu navigation|Close navigation/ })
+    .click();
   assert.ok(await mobile.locator('nav').isVisible());
   await mobile.locator('nav a[href="#projects"]').click();
   assert.ok(!(await mobile.locator('nav').isVisible()));
@@ -283,7 +289,10 @@ try {
       .locator('.mobile-ink-ring')
       .evaluate((el) => el.getAnimations().length > 0),
   );
-  await touchPage.waitForTimeout(450);
+  await touchPage.waitForFunction(
+    () =>
+      document.querySelector('.mobile-ink-ring').getAnimations().length === 0,
+  );
   await touchPage.evaluate(() => {
     const args = { pointerType: 'touch', pointerId: 4, isPrimary: true };
     window.dispatchEvent(
@@ -303,7 +312,7 @@ try {
     0,
   );
   const touchMenu = touchPage.getByRole('button', {
-    name: 'Toggle navigation',
+    name: /Menu navigation|Close navigation/,
   });
   await touchMenu.tap();
   assert.equal(await touchMenu.getAttribute('aria-expanded'), 'true');
@@ -393,11 +402,11 @@ try {
   await noGl.goto('http://127.0.0.1:4173');
   await noGl.waitForTimeout(800);
   assert.ok(await noGl.locator('.static-core').isVisible());
-  assert.equal(await noGl.locator('.project-card').count(), 4);
+  assert.equal(await noGl.locator('.project-card').count(), 5);
   const noJs = await browser.newPage({ javaScriptEnabled: false });
   await noJs.goto('http://127.0.0.1:4173');
   assert.equal(await noJs.locator('main section[id]').count(), 6);
-  assert.equal(await noJs.locator('.project-actions a').count(), 4);
+  assert.equal(await noJs.locator('.project-actions a').count(), 10);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   assert.ok(!(await page.locator('.flight-layer').isVisible()));
   await page.emulateMedia({ reducedMotion: 'no-preference' });

@@ -9,12 +9,14 @@
     "lint": "oxlint src/components/portfolio src/components/interactions src/App.tsx src/main.tsx src/data/profile.ts src/data/projects.ts src/data/skills.ts src/data/experience.ts src/hooks src/three src/lib scripts vite.config.ts",
     "preview": "vite preview",
     "test:smoke": "node scripts/smoke.mjs",
-    "format": "prettier --write \"src/components/portfolio/**/*.{tsx,css}\" \"src/components/interactions/**/*.{tsx,ts,css}\" \"src/hooks/*.ts\" \"src/three/*.{tsx,ts}\" \"src/lib/*.ts\" \"src/data/{profile,projects,skills,experience}.ts\" src/App.tsx src/main.tsx src/styles/global.css \"scripts/*.mjs\"",
-    "test:mobile": "node scripts/mobile-regression.mjs"
+    "format": "prettier --write \"src/components/portfolio/**/*.{tsx,css}\" \"src/components/interactions/**/*.{tsx,ts,css}\" \"src/hooks/*.ts\" \"src/three/*.{tsx,ts}\" \"src/lib/*.ts\" \"src/data/{profile,projects,skills,experience}.ts\" src/App.tsx src/main.tsx \"src/styles/*.css\" \"scripts/*.mjs\"",
+    "test:mobile": "node scripts/mobile-regression.mjs",
+    "assets:social": "node scripts/generate-social.mjs",
+    "test:seo": "node scripts/seo.mjs",
+    "assets:matcap": "node scripts/generate-matcap.mjs"
   },
   "dependencies": {
     "@types/three": "^0.186.0",
-    "framer-motion": "^13.4.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "three": "^0.186.1"

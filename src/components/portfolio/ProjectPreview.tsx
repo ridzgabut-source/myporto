@@ -1,11 +1,35 @@
 import type { CSSProperties } from 'react';
 import type { Project } from '../../data/projects';
 import { Arrow } from './ui';
-export function Preview({ project }: { project: Project }) {
+export function Preview({
+  project,
+  priority = false,
+}: {
+  project: Project;
+  priority?: boolean;
+}) {
+  if (project.cover)
+    return (
+      <div className="project-preview project-cover">
+        <img
+          src={project.cover}
+          alt={`Tampilan website ${project.title}: katalog layanan dan penjadwalan pickup`}
+          width="1440"
+          height="900"
+          loading={priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : 'auto'}
+          decoding="async"
+        />
+        <span className="preview-note">
+          Live website / {new URL(project.demo).hostname}
+        </span>
+      </div>
+    );
   return (
     <div
       className={`project-preview preview-${project.kind}`}
       style={{ '--project-color': project.color } as CSSProperties}
+      role="img"
       aria-label={`Ilustrasi antarmuka ${project.title}`}
     >
       <div className="browser-bar">

@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import { projects } from '../../data/projects';
 import { Arrow } from './ui';
 import { getWhatsAppLink } from '../../lib/whatsapp';
 import { track } from '../../lib/analytics';
@@ -16,9 +17,9 @@ export function Hero() {
           <em>Meaningful experiences.</em>
         </h1>
         <p className="hero-description">
-          I turn ideas into digital products that feel right.
-          <br />
-          Web experiences, useful systems, and a little curiosity.
+          Saya Farid, Full Stack Developer di Indonesia.
+          <br /> Membangun website, sistem booking, dan pengalaman web
+          interaktif.
         </p>
         <div className="hero-actions">
           <a className="button primary" href="#projects">
@@ -51,11 +52,11 @@ export function Hero() {
           <span className="card-symbol" aria-hidden="true">
             ↗
           </span>
-          <h3>
+          <h2>
             From a thought
             <br />
             to a working product.
-          </h3>
+          </h2>
           <p>
             Designed with care.
             <br />
@@ -65,18 +66,19 @@ export function Hero() {
         </a>
         <a href="#projects" className="floating-card card-work">
           <div className="mini-projects" aria-hidden="true">
+            <span>L.</span>
             <span>C.</span>
             <span>A.</span>
             <span>B.</span>
             <span>W.</span>
           </div>
-          <h3>
+          <h2>
             Real projects.
             <br />
             Ready to explore.
-          </h3>
+          </h2>
           <p>
-            Four live experiences.
+            {projects.length} live experiences.
             <br />
             One curious developer.
           </p>
