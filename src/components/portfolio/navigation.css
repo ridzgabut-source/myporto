@@ -1,0 +1,34 @@
+.nav-panel,.nav-panel-inner,.nav-sheet{display:contents}
+.nav-panel-label,.nav-panel-footer,.nav-item-number,.nav-item-arrow,.nav-reading-track,.mobile-nav-scrim{display:none}
+.navbar{transition:background .24s,border-color .24s,box-shadow .24s}
+@media(max-width:767px){
+ .navbar{gap:10px;transition:background .24s,border-color .24s,box-shadow .24s}
+ .navbar[data-menu-open="true"]{background:#fafaf7;border-color:#cfc9b9;box-shadow:0 4px 15px #30271a08}
+ .menu-toggle{display:flex;align-items:center;justify-content:center;gap:10px;min-width:74px;height:44px;padding:0 9px;border-radius:30px;position:relative;color:#39362e}
+ .menu-label{width:28px;text-align:left;font-size:10px;line-height:1}
+ .hamburger-icon{display:block;position:relative;width:18px;height:18px}
+ .hamburger-icon>span{position:absolute;left:0;width:18px;height:1px;background:currentColor;top:6px;transition:transform .3s cubic-bezier(.22,1,.36,1),opacity .2s;transform-origin:center}
+ .hamburger-icon>span:last-child{top:12px;width:13px;left:5px}
+ .navbar[data-menu-open="true"] .hamburger-icon>span:first-child{transform:translateY(3px) rotate(45deg)}
+ .navbar[data-menu-open="true"] .hamburger-icon>span:last-child{width:18px;left:0;transform:translateY(-3px) rotate(-45deg)}
+ .nav-panel{display:grid;grid-template-rows:0fr;position:absolute;top:70px;left:-1px;right:-1px;padding:0;border:0;border-radius:15px;background:#fafaf7;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-9px) scale(.985);transform-origin:top center;transition:grid-template-rows .32s cubic-bezier(.22,1,.36,1),transform .32s cubic-bezier(.22,1,.36,1),opacity .2s,visibility 0s .32s;box-shadow:0 16px 35px #2d261b12,inset 0 0 0 1px #d9d3c3}
+ .nav-panel.open{grid-template-rows:1fr;opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1);transition-delay:0s}
+ .nav-panel-inner{display:block;min-height:0;overflow:hidden}
+ .nav-sheet{display:block;max-height:calc(100dvh - 116px);overflow-y:auto;overscroll-behavior:contain;padding:22px 16px 18px}
+ .nav-panel-label{display:block;font:7px var(--mono);letter-spacing:1.2px;color:#7d7460;margin:0 10px 15px}
+ .nav-panel nav{position:static;display:flex;flex-direction:column;align-items:stretch;gap:3px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+ .nav-panel nav a{display:flex;align-items:center;flex:none;gap:16px;min-height:48px;padding:12px 13px;text-align:left;white-space:normal;border-radius:9px;font:500 18px 'Space Grotesk',sans-serif;letter-spacing:-.5px;opacity:0;transform:translateY(8px);transition:opacity .18s,transform .24s cubic-bezier(.22,1,.36,1),background .18s,color .18s}
+ .nav-panel.open nav a{opacity:1;transform:translateY(0);transition-delay:calc(var(--menu-order)*18ms)}
+ .nav-panel nav a.active{background:#ece8dc;color:#171717}
+ .nav-item-number{display:block;font:7px var(--mono);color:#8b816e;letter-spacing:0}
+ .nav-item-arrow{display:block;margin-left:auto;font:16px 'DM Sans',sans-serif;color:#7d7158}
+ .nav-panel-footer{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:18px 10px 0;padding-top:15px;border-top:1px solid #e2ded0;font:6px var(--mono);letter-spacing:.3px;color:#7d7460}
+ .nav-panel-footer>span:last-child{margin-left:auto}.nav-panel-footer .status-dot{width:4px;height:4px}
+ .mobile-nav-scrim{display:block;position:fixed;z-index:19;inset:0;width:100%;height:100dvh;background:#30291b18;border:0;padding:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s,visibility 0s .32s}
+ .mobile-nav-scrim.open{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
+ .nav-reading-track{display:block;position:absolute;left:13px;right:13px;bottom:-1px;height:2px;overflow:hidden;border-radius:2px;pointer-events:none;opacity:.55}
+ .nav-reading-progress{height:100%;width:100%;background:#918063;transform:scaleX(0);transform-origin:left center;will-change:transform}
+}
+@media(prefers-reduced-motion:reduce){.nav-panel,.nav-panel nav a,.hamburger-icon>span,.mobile-nav-scrim{transition:none!important}}
+
+@media(max-width:767px){.mobile-menu-open .flight-layer{visibility:hidden}}

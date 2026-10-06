@@ -1,0 +1,12 @@
+﻿.mobile-ink-ring{position:fixed;left:0;top:0;z-index:40;pointer-events:none;width:50px;height:50px;border:1px solid #9c8764;border-radius:50%;background:#c4ad7f12;opacity:0}
+@media(max-width:767px){
+ .mobile-reveal{transition:translate .3s cubic-bezier(.22,1,.36,1)}
+ .mobile-reveal.reveal-pending{translate:0 12px}
+ .section-heading.mobile-reveal,.about-bento>div.mobile-reveal{transition:translate .3s cubic-bezier(.22,1,.36,1),opacity .26s}
+ .section-heading.reveal-pending,.about-bento>div.reveal-pending{opacity:0}
+ .button,.preview-button,.filters button,.skill-tabs button,.skill-list>button,.menu-toggle{transition:scale .16s,background .18s,color .18s,border-color .18s}
+ .button:active,.preview-button:active,.filters button:active,.skill-tabs button:active,.skill-list>button:active,.menu-toggle:active{scale:.975}
+ .floating-card:active{scale:.985}.floating-card:hover{translate:none}
+}
+@media(min-width:768px){.mobile-ink-ring{display:none}}
+@media(prefers-reduced-motion:reduce){.mobile-ink-ring{display:none}.mobile-reveal.reveal-pending{opacity:1;translate:none}.button:active,.preview-button:active,.filters button:active,.skill-tabs button:active,.skill-list>button:active,.menu-toggle:active,.floating-card:active{scale:1}}
