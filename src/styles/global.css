@@ -183,7 +183,7 @@ em {
   letter-spacing: 0.7px;
   color: var(--muted);
 }
-nav {
+.navbar nav {
   display: flex;
   gap: 4px;
   padding: 4px;
@@ -191,7 +191,7 @@ nav {
   background: #ffffff80;
   border-radius: 100px;
 }
-nav a {
+.navbar nav a {
   font-size: 11px;
   color: var(--muted);
   position: relative;
@@ -199,11 +199,11 @@ nav a {
   border-radius: 30px;
   min-height: 36px;
 }
-nav a:hover {
+.navbar nav a:hover {
   color: #171717;
   background: #eeeeea;
 }
-nav a.active {
+.navbar nav a.active {
   background: #e8e8e2;
   color: #171717;
 }
@@ -334,7 +334,6 @@ h1 em {
   position: absolute;
   border: 1px solid #ffffffd9;
   background: #ffffffe0;
-  backdrop-filter: blur(8px);
   padding: 13px 18px;
   border-radius: 11px;
   font-size: 10px;
@@ -434,7 +433,6 @@ h1 em {
   box-shadow: 0 12px 50px #00000004;
   border-radius: 21px;
   padding: 22px;
-  backdrop-filter: blur(8px);
 }
 .floating-card:hover {
   background: white;
@@ -1495,7 +1493,7 @@ dialog::backdrop {
   .wordmark small {
     display: none;
   }
-  nav a {
+  .navbar nav a {
     padding: 10px 11px;
   }
   .nav-actions {
@@ -1641,7 +1639,7 @@ footer > a:last-child {
 
 @media (min-width: 768px) {
   .navbar.scrolled {
-    backdrop-filter: blur(18px);
+    background: #fafaf7f7;
   }
 }
 

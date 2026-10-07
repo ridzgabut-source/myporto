@@ -120,9 +120,11 @@ export function structuredData(path = '/', site = profile.siteUrl) {
         inLanguage: 'id-ID',
         isPartOf: { '@id': website['@id'] },
         mainEntity: { '@id': meta.canonical + '#project' },
+        breadcrumb: { '@id': meta.canonical + '#breadcrumb' },
       },
       {
         '@type': 'BreadcrumbList',
+        '@id': meta.canonical + '#breadcrumb',
         itemListElement: [
           {
             '@type': 'ListItem',

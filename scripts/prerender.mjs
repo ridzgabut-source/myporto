@@ -51,7 +51,7 @@ try {
 <meta property="og:type" content="website"/><meta property="og:site_name" content="Farid — Developer Portfolio"/>
 <meta property="og:locale" content="id_ID"/><meta property="og:title" content="${escape(meta.title)}"/>
 <meta property="og:description" content="${escape(meta.description)}"/><meta property="og:url" content="${escape(meta.canonical)}"/>
-<meta property="og:image" content="${escape(meta.image)}"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Farid, Full Stack Developer Indonesia ? portfolio website"/>
+<meta property="og:image" content="${escape(meta.image)}"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Farid, Full Stack Developer Indonesia - portfolio website"/>
 <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="${escape(meta.title)}"/><meta name="twitter:description" content="${escape(meta.description)}"/><meta name="twitter:image" content="${escape(meta.image)}"/><meta name="twitter:image:alt" content="Portofolio website Farid"/>
 <script type="application/ld+json">${json(structuredData(path, site))}</script>`;
     const html = template

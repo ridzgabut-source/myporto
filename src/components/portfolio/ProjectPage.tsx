@@ -29,11 +29,11 @@ export function ProjectPage({ project }: { project: Project }) {
       </a>
       <ProjectHeader />
       <main id="main" className="project-page">
-        <div className="breadcrumbs" aria-label="Breadcrumb">
+        <nav className="breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Portofolio Farid</a>
           <span aria-hidden="true">/</span>
           <span aria-current="page">{project.title}</span>
-        </div>
+        </nav>
         <p className="eyebrow">
           CASE STUDY / {project.category.toUpperCase()} / {project.year}
         </p>

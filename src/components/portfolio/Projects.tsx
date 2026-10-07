@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useCardTilt } from '../../hooks/useCardTilt';
+import { useRef, useState } from 'react';
 import { projects } from '../../data/projects';
 import type { Project } from '../../data/projects';
 import { Heading, Arrow, External } from './ui';
@@ -8,6 +9,8 @@ import { projectPath } from '../../lib/seo';
 import { track } from '../../lib/analytics';
 const trackProject = (slug: string) => track('project_view', { project: slug });
 export function Projects() {
+  const grid = useRef<HTMLDivElement>(null);
+  useCardTilt(grid);
   const [filter, setFilter] = useState('All');
   const [selected, setSelected] = useState<Project | null>(null);
   const categories = [
@@ -44,28 +47,9 @@ export function Projects() {
           </button>
         ))}
       </div>
-      <div className="project-grid">
+      <div ref={grid} className="project-grid">
         {filtered.map((p, i) => (
-          <article
-            key={p.slug}
-            className="project-card"
-            onPointerMove={(e) => {
-              if (
-                e.pointerType !== 'mouse' ||
-                matchMedia('(prefers-reduced-motion: reduce)').matches ||
-                innerWidth < 768
-              )
-                return;
-              const r = e.currentTarget.getBoundingClientRect();
-              e.currentTarget.style.setProperty(
-                '--tilt',
-                `${((e.clientX - r.left - r.width / 2) / r.width) * 3}deg`,
-              );
-            }}
-            onPointerLeave={(e) =>
-              e.currentTarget.style.setProperty('--tilt', '0deg')
-            }
-          >
+          <article key={p.slug} className="project-card">
             <div className="preview-button">
               <Preview project={p} />
             </div>

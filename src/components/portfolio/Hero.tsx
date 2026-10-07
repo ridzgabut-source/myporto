@@ -1,9 +1,8 @@
-import { lazy, Suspense } from 'react';
 import { projects } from '../../data/projects';
 import { Arrow } from './ui';
 import { getWhatsAppLink } from '../../lib/whatsapp';
 import { track } from '../../lib/analytics';
-const Scene = lazy(() => import('../../three/Scene'));
+import Scene from '../../three/Scene';
 export function Hero() {
   return (
     <section id="home" className="hero">
@@ -39,15 +38,7 @@ export function Hero() {
         </div>
       </div>
       <div className="hero-stage">
-        <Suspense
-          fallback={
-            <div className="scene-placeholder" aria-hidden="true">
-              F.
-            </div>
-          }
-        >
-          <Scene />
-        </Suspense>
+        <Scene />
         <a href="#about" className="floating-card card-intro">
           <span className="card-symbol" aria-hidden="true">
             ↗

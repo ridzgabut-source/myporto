@@ -92,6 +92,17 @@ try {
       assert.ok(
         await noJs.getByRole('link', { name: 'Buka live demo' }).isVisible(),
       );
+      const breadcrumb = schema['@graph'].find(
+        (item) => item['@type'] === 'BreadcrumbList',
+      );
+      const webpage = schema['@graph'].find(
+        (item) => item['@type'] === 'WebPage',
+      );
+      assert.equal(webpage.breadcrumb['@id'], breadcrumb['@id']);
+      assert.equal(
+        await noJs.getByRole('navigation', { name: 'Breadcrumb' }).count(),
+        1,
+      );
     }
   }
   await noJs.goto('http://127.0.0.1:4176/404.html');

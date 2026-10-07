@@ -65,8 +65,7 @@ export function InteractiveAtmosphere() {
     const renderPointer = () => {
       pointerFrame = 0;
       if (!motion.matches && glow.current) {
-        glow.current.style.setProperty('--pointer-x', `${point.x}px`);
-        glow.current.style.setProperty('--pointer-y', `${point.y}px`);
+        glow.current.style.transform = `translate3d(${point.x - 350}px,${point.y - 350}px,0)`;
       }
       if (isActive()) writePosition();
     };
@@ -77,7 +76,8 @@ export function InteractiveAtmosphere() {
         held = false;
         syncLens();
       }
-      if (!pointerFrame) pointerFrame = requestAnimationFrame(renderPointer);
+      if ((!motion.matches || isActive()) && !pointerFrame)
+        pointerFrame = requestAnimationFrame(renderPointer);
     };
     const down = (event: PointerEvent) => {
       if (

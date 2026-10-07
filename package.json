@@ -13,7 +13,8 @@
     "test:mobile": "node scripts/mobile-regression.mjs",
     "assets:social": "node scripts/generate-social.mjs",
     "test:seo": "node scripts/seo.mjs",
-    "assets:matcap": "node scripts/generate-matcap.mjs"
+    "assets:matcap": "node scripts/generate-matcap.mjs",
+    "test:desktop": "node scripts/desktop-performance.mjs"
   },
   "dependencies": {
     "@types/three": "^0.186.0",
